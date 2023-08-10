@@ -4,6 +4,19 @@
 
 /////////////////////////////////////////////////////////////
 
+/*
+
+  Things to do:
+  1. Add code to check to see who won
+  2. Announce winner of the game
+  3. Restart button to restart the game
+  4. Refactor code
+  5. (Optional) Add AI to play the game
+
+*/
+
+/////////////////////////////////////////////////////////////
+
 //Player Factory Function
 const playerFactory = (symbol) => {
   return { symbol };
