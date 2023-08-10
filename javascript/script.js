@@ -122,13 +122,20 @@ const GameBoard = (() => {
 
 /////////////////////////////////////////////////////////////
 
+const h1DOM = document.querySelector("h1");
 const gameBoardDOM = document.querySelector("#game-board");
 const player1 = playerFactory("X");
 const player2 = playerFactory("O");
 let player1Went = false;
+let rounds = 0;
 
 gameBoardDOM.addEventListener("click", (e) => {
-  if (!player1Went && player1.won == false && player2.won == false) {
+  if (
+    !player1Went &&
+    player1.won == false &&
+    player2.won == false &&
+    rounds != 9
+  ) {
     if (e.target.className == "grid-cell") {
       if (e.target.textContent == "") {
         //update game board DOM cell
@@ -138,16 +145,15 @@ gameBoardDOM.addEventListener("click", (e) => {
         GameBoard.gameBoard[index] = player1.symbol;
         player1Went = true;
         highlightPlayerNameForTurn(1);
-
-        if (GameBoard.didYouWin(player1.symbol)) {
-          player1.won = true;
-        }
+        player1.won = GameBoard.didYouWin(player1.symbol);
+        rounds++;
       }
     }
   } else if (
     player1Went == true &&
     player1.won == false &&
-    player2.won == false
+    player2.won == false &&
+    rounds != 9
   ) {
     if (e.target.className == "grid-cell") {
       if (e.target.textContent == "") {
@@ -158,12 +164,18 @@ gameBoardDOM.addEventListener("click", (e) => {
         GameBoard.gameBoard[index] = player2.symbol;
         player1Went = false;
         highlightPlayerNameForTurn(2);
-
-        if (GameBoard.didYouWin(player2.symbol)) {
-          player2.won = true;
-        }
+        player2.won = GameBoard.didYouWin(player2.symbol);
+        rounds++;
       }
     }
+  }
+
+  if (player1.won) {
+    h1DOM.textContent = "Player 1 Won!";
+  } else if (player2.won) {
+    h1DOM.textContent = "Player 2 Won!";
+  } else if (rounds == 9) {
+    h1DOM.textContent = "You Tied";
   }
 });
 
