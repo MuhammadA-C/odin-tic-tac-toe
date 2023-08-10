@@ -1,4 +1,3 @@
-//Create a GameBoard Object that stores the gameboard array
 //Create players object
 //Create object that controls the flow of the game
 //Use a module when you only ever need one of something

@@ -1,1 +1,48 @@
+h1,
+h2 {
+  margin: 0;
+}
 
+#top-ui {
+  display: flex;
+  align-items: center;
+  font-size: 2.25rem;
+  flex-direction: column;
+}
+
+#players {
+  display: flex;
+  font-size: 1.5rem;
+  gap: 1000px;
+}
+
+/*Aligns the game board to the center of the screen*/
+#container {
+  display: flex;
+  justify-content: center;
+}
+
+#game-board {
+  background-color: rgb(255, 253, 226);
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  grid-template-rows: repeat(3, 200px);
+}
+
+.grid-cell {
+  border-style: solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+}
+
+/*Will be used to set the color of the X to Red*/
+.red {
+  color: red;
+}
+
+/*Will be used to set the color of the O to Blue*/
+.blue {
+  color: blue;
+}
