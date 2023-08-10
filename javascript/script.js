@@ -19,7 +19,8 @@
 
 //Player Factory Function
 const playerFactory = (symbol) => {
-  return { symbol };
+  let won = false;
+  return { symbol, won };
 };
 
 //gameBoard Module
@@ -32,7 +33,91 @@ const GameBoard = (() => {
     }
   };
 
-  return { gameBoard, resetGameBoard };
+  let didYouWin = (symbol) => {
+    if (wonHorizontally(symbol)) {
+      return true;
+    } else if (wonVertically(symbol)) {
+      return true;
+    } else if (wonDiagnally(symbol)) {
+      return true;
+    }
+    return false;
+  };
+
+  let wonHorizontally = (symbol) => {
+    if (
+      GameBoard.gameBoard[0] == symbol &&
+      GameBoard.gameBoard[1] == symbol &&
+      GameBoard.gameBoard[2] == symbol
+    ) {
+      return true;
+    }
+
+    if (
+      GameBoard.gameBoard[8] == symbol &&
+      GameBoard.gameBoard[7] == symbol &&
+      GameBoard.gameBoard[6] == symbol
+    ) {
+      return true;
+    }
+
+    if (
+      GameBoard.gameBoard[3] == symbol &&
+      GameBoard.gameBoard[4] == symbol &&
+      GameBoard.gameBoard[5] == symbol
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  let wonVertically = (symbol) => {
+    if (
+      GameBoard.gameBoard[0] == symbol &&
+      GameBoard.gameBoard[3] == symbol &&
+      GameBoard.gameBoard[6] == symbol
+    ) {
+      return true;
+    }
+
+    if (
+      GameBoard.gameBoard[1] == symbol &&
+      GameBoard.gameBoard[4] == symbol &&
+      GameBoard.gameBoard[7] == symbol
+    ) {
+      return true;
+    }
+
+    if (
+      GameBoard.gameBoard[8] == symbol &&
+      GameBoard.gameBoard[5] == symbol &&
+      GameBoard.gameBoard[2] == symbol
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  let wonDiagnally = (symbol) => {
+    if (
+      GameBoard.gameBoard[0] == symbol &&
+      GameBoard.gameBoard[4] == symbol &&
+      GameBoard.gameBoard[8] == symbol
+    ) {
+      return true;
+    }
+
+    if (
+      GameBoard.gameBoard[6] == symbol &&
+      GameBoard.gameBoard[4] == symbol &&
+      GameBoard.gameBoard[2] == symbol
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  return { gameBoard, resetGameBoard, didYouWin };
 })();
 
 /////////////////////////////////////////////////////////////
@@ -43,7 +128,7 @@ const player2 = playerFactory("O");
 let player1Went = false;
 
 gameBoardDOM.addEventListener("click", (e) => {
-  if (!player1Went) {
+  if (!player1Went && player1.won == false && player2.won == false) {
     if (e.target.className == "grid-cell") {
       if (e.target.textContent == "") {
         //update game board DOM cell
@@ -53,9 +138,17 @@ gameBoardDOM.addEventListener("click", (e) => {
         GameBoard.gameBoard[index] = player1.symbol;
         player1Went = true;
         highlightPlayerNameForTurn(1);
+
+        if (GameBoard.didYouWin(player1.symbol)) {
+          player1.won = true;
+        }
       }
     }
-  } else {
+  } else if (
+    player1Went == true &&
+    player1.won == false &&
+    player2.won == false
+  ) {
     if (e.target.className == "grid-cell") {
       if (e.target.textContent == "") {
         //update game board DOM cell
@@ -65,6 +158,10 @@ gameBoardDOM.addEventListener("click", (e) => {
         GameBoard.gameBoard[index] = player2.symbol;
         player1Went = false;
         highlightPlayerNameForTurn(2);
+
+        if (GameBoard.didYouWin(player2.symbol)) {
+          player2.won = true;
+        }
       }
     }
   }
@@ -85,3 +182,27 @@ function highlightPlayerNameForTurn(numberForPlayer) {
       break;
   }
 }
+
+/*
+
+Game Board numbered for array indexes 
+  0 1 2
+  3 4 5
+  6 7 8
+
+  wins:
+ horizontal
+  - 0 1 2
+  - 8 7 6
+  - 3 4 5
+
+  vertical
+  - 0 3 6
+  - 1 4 7
+  - 8 5 2
+
+  Diagnal  
+  - 0 4 8
+  - 6 4 2
+
+*/
