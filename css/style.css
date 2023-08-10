@@ -40,3 +40,16 @@ h2 {
 .your-turn {
   color: rgb(22, 203, 37);
 }
+
+.restart-game {
+  position: absolute;
+  margin-top: 260px;
+}
+
+button {
+  width: 200px;
+  height: 60px;
+  font-size: 1.5rem;
+  background-color: rgb(240, 122, 122);
+  border-radius: 20px;
+}

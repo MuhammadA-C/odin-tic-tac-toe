@@ -7,11 +7,8 @@
 /*
 
   Things to do:
-  1. Add code to check to see who won
-  2. Announce winner of the game
-  3. Restart button to restart the game
-  4. Refactor code
-  5. (Optional) Add AI to play the game
+  1. Refactor code
+  2. (Optional) Add AI to play the game
 
 */
 
@@ -122,7 +119,6 @@ const GameBoard = (() => {
 
 /////////////////////////////////////////////////////////////
 
-const h1DOM = document.querySelector("h1");
 const gameBoardDOM = document.querySelector("#game-board");
 const player1 = playerFactory("X");
 const player2 = playerFactory("O");
@@ -170,12 +166,26 @@ gameBoardDOM.addEventListener("click", (e) => {
     }
   }
 
+  const h1DOM = document.querySelector("h1");
+
   if (player1.won) {
     h1DOM.textContent = "Player 1 Won!";
+    displayRestartBtn();
+    document.querySelector(".restart-game").addEventListener("click", () => {
+      location.reload();
+    });
   } else if (player2.won) {
     h1DOM.textContent = "Player 2 Won!";
+    displayRestartBtn();
+    document.querySelector(".restart-game").addEventListener("click", () => {
+      location.reload();
+    });
   } else if (rounds == 9) {
     h1DOM.textContent = "You Tied";
+    displayRestartBtn();
+    document.querySelector(".restart-game").addEventListener("click", () => {
+      location.reload();
+    });
   }
 });
 
@@ -218,3 +228,17 @@ Game Board numbered for array indexes
   - 6 4 2
 
 */
+
+function displayRestartBtn() {
+  const btnDOM = document.createElement("button");
+  btnDOM.type = "button";
+  btnDOM.textContent = "Play Again";
+
+  const btnContainerDOM = document.createElement("div");
+  btnContainerDOM.classList.add("restart-game");
+
+  btnContainerDOM.appendChild(btnDOM);
+
+  const containerDOM = document.querySelector("#container");
+  containerDOM.appendChild(btnContainerDOM);
+}
