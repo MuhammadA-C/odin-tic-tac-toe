@@ -6,7 +6,12 @@
 /////////////////////////////////////////////////////////////
 
 //Player Factory Function
-const playerFactory = () => {};
+const playerFactory = (symbol) => {
+  return { symbol };
+};
+
+const player1 = playerFactory("X");
+const player2 = playerFactory("O");
 
 //gameBoard Module
 const GameBoard = (() => {
@@ -28,7 +33,11 @@ const gameBoardDOM = document.querySelector("#game-board");
 gameBoardDOM.addEventListener("click", (e) => {
   if (e.target.className == "grid-cell") {
     if (e.target.textContent == "") {
+      //update game board DOM cell
       e.target.textContent = "X";
+      //Update game board array
+      let index = e.target.getAttribute("data-cell");
+      GameBoard.gameBoard[index] = "X";
     }
   }
 });
