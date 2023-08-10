@@ -23,6 +23,7 @@ const GameBoard = (() => {
 })();
 
 /////////////////////////////////////////////////////////////
+
 const gameBoardDOM = document.querySelector("#game-board");
 const player1 = playerFactory("X");
 const player2 = playerFactory("O");
@@ -38,6 +39,7 @@ gameBoardDOM.addEventListener("click", (e) => {
         let index = e.target.getAttribute("data-cell");
         GameBoard.gameBoard[index] = player1.symbol;
         player1Went = true;
+        highlightPlayerNameForTurn(1);
       }
     }
   } else {
@@ -49,7 +51,24 @@ gameBoardDOM.addEventListener("click", (e) => {
         let index = e.target.getAttribute("data-cell");
         GameBoard.gameBoard[index] = player2.symbol;
         player1Went = false;
+        highlightPlayerNameForTurn(2);
       }
     }
   }
 });
+
+function highlightPlayerNameForTurn(numberForPlayer) {
+  const player1Txt = document.querySelector("#players > :first-child");
+  const player2Txt = document.querySelector("#players > :last-child");
+
+  switch (numberForPlayer) {
+    case 1:
+      player1Txt.classList.toggle("your-turn");
+      player2Txt.classList.toggle("your-turn");
+      break;
+    case 2:
+      player2Txt.classList.toggle("your-turn");
+      player1Txt.classList.toggle("your-turn");
+      break;
+  }
+}

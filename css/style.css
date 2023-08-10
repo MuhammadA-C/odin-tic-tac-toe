@@ -37,12 +37,6 @@ h2 {
   font-size: 4rem;
 }
 
-/*Will be used to set the color of the X to Red*/
-.red {
-  color: red;
-}
-
-/*Will be used to set the color of the O to Blue*/
-.blue {
-  color: blue;
+.your-turn {
+  color: rgb(22, 203, 37);
 }
