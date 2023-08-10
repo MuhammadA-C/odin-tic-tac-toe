@@ -29,7 +29,6 @@ gameBoardDOM.addEventListener("click", (e) => {
   if (e.target.className == "grid-cell") {
     if (e.target.textContent == "") {
       e.target.textContent = "X";
-      console.log("hit");
     }
   }
 });
